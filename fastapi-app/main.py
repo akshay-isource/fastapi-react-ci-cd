@@ -21,7 +21,7 @@ def root():
 
 @app.get("/hi")
 def say_hi():
-    return {"message": "Hi Akshay 👋"}
+    return {"message": "Hi Akshay from AWS EC2👋"}
 
 
 @app.get("/echo/{name}")
