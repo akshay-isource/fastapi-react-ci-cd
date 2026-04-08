@@ -16,7 +16,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"message": "Hello from FastAPI with Docker and CI/CD🚀"}
+    return {"message": "Hello from FastAPI with Docker and CI/CD🚀 ..."}
 
 
 @app.get("/hi")
