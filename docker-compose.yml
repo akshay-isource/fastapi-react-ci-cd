@@ -1,0 +1,28 @@
+services:
+  backend:
+    image: akkii/fastapi-app:latest
+    container_name: fastapi-container
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend-container
+    restart: unless-stopped
+    expose:
+      - "80"
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
