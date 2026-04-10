@@ -21,9 +21,9 @@ def root():
 
 @app.get("/hi")
 def say_hi():
-    return {"message": "Hi Akshay from AWS EC2👋"}
+    return {"message": "Hi Akshay Gawande with Domain and https..."}
 
 
 @app.get("/echo/{name}")
 def echo(name: str):
-    return {"message": f"Hello {name}"}
+    return {"message": f"Hello {name} now CICD is working with Docker and FastAPI!"}
