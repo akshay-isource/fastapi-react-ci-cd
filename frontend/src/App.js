@@ -1,31 +1,36 @@
 import React, { useState } from "react";
-import axios from "axios";
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "/api";
+import Sidebar from "./components/Sidebar";
+import TopBar from "./components/TopBar";
+import Dashboard from "./components/Dashboard";
+import "./App.css";
 
 function App() {
-  const [message, setMessage] = useState("");
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [activePage, setActivePage] = useState("dashboard");
 
-  const getHi = async () => {
-    const res = await axios.get(`${API_BASE_URL}/hi`);
-    setMessage(res.data.message);
-  };
-
-  const getEcho = async () => {
-    const res = await axios.get(`${API_BASE_URL}/echo/Akshay`);
-    setMessage(res.data.message);
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    localStorage.setItem("theme", next);
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>FastAPI + React Demo</h2>
-
-      <button onClick={getHi}>Say Hi</button>
-      <button onClick={getEcho} style={{ marginLeft: "10px" }}>
-        Echo
-      </button>
-
-      <p>{message}</p>
+    <div className={`app ${theme}`}>
+      <Sidebar
+        collapsed={sidebarCollapsed}
+        activePage={activePage}
+        onNavigate={setActivePage}
+        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
+      <div className={`main-area ${sidebarCollapsed ? "collapsed" : ""}`}>
+        <TopBar theme={theme} onToggleTheme={toggleTheme} />
+        <div className="page-content">
+          <Dashboard activePage={activePage} />
+        </div>
+      </div>
     </div>
   );
 }
