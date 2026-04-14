@@ -1,0 +1,12 @@
+langgraph>=0.2.0
+langchain-core>=0.3.0
+langchain-community>=0.3.0
+duckduckgo-search>=6.0.0
+fastapi>=0.115.0
+uvicorn>=0.32.0
+python-dotenv>=1.0.0
+
+# LLM Providers — install only what you need
+langchain-anthropic>=0.3.0       # for Claude
+langchain-openai>=0.3.0          # for GPT & Sarvam (OpenAI-compatible)
+# langchain-google-genai>=2.0.0  # for Gemini — uncomment when needed

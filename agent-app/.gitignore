@@ -1,0 +1,8 @@
+# dependencies
+/venv
+
+# Python bytecode (all subdirectories)
+__pycache__/
+
+# Environment / secrets
+.env

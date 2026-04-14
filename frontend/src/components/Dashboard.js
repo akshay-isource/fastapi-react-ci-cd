@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ResearchPage from "./ResearchPage";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "/api";
 
@@ -242,6 +243,8 @@ function SettingsPage() {
 
 function Dashboard({ activePage }) {
   switch (activePage) {
+    case "research":
+      return <ResearchPage />;
     case "pipeline":
       return <PipelinePage />;
     case "apis":

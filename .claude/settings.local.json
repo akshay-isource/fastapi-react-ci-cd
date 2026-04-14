@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npx react-scripts:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(grep -E \"\\\\.py$\")"
     ]
   }
 }

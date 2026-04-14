@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# DevFlow AI — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React dashboard for the DevFlow AI platform. Includes a CI/CD pipeline dashboard and an **AI Research Assistant** page that connects to the multi-agent backend.
 
-## Available Scripts
+## Pages
 
-In the project directory, you can run:
+| Page | Route | Description |
+|------|-------|-------------|
+| Dashboard | `dashboard` | Stats, pipeline flow, API health, recent activity |
+| Research | `research` | AI Research Assistant — runs the multi-agent pipeline |
+| Pipeline | `pipeline` | Pipeline management (coming soon) |
+| APIs | `apis` | API endpoint testing (`/api/hi`, `/api/echo`) |
+| Settings | `settings` | Platform settings (coming soon) |
 
-### `npm start`
+## AI Research Page
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The Research page connects to the `agent-app` backend and provides:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Search input** — enter a research topic
+- **Agent pipeline visualization** — shows 8 agents with real-time status (running/completed/retry)
+- **Quality score** — color-coded badge (green 7+, orange 4-6, red below 4)
+- **Final report** — markdown-rendered research output
+- **Collapsible panels** — raw research data, analysis, activity log
 
-### `npm test`
+Communication uses **Server-Sent Events (SSE)** for real-time streaming from the backend.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Setup
 
-### `npm run build`
+### 1. Install dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+cd frontend
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. Configure environment (optional)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Create a `.env` file in the `frontend/` directory:
 
-### `npm run eject`
+```env
+# Main backend API (for dashboard, APIs page)
+REACT_APP_API_BASE_URL=/api
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Agent backend (for Research page)
+REACT_APP_RESEARCH_API_URL=http://localhost:8001
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Defaults work for local development without a `.env` file.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 3. Run the dev server
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm start
+```
 
-## Learn More
+Opens at `http://localhost:3000`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 4. Build for production
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run build
+```
 
-### Code Splitting
+Output goes to `build/` — static files ready to serve via nginx or any static host.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Running with the Agent Backend
 
-### Analyzing the Bundle Size
+To use the Research page, the agent backend must be running:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+# Terminal 1 — agent backend
+cd agent-app
+python main.py          # starts on port 8001
 
-### Making a Progressive Web App
+# Terminal 2 — frontend
+cd frontend
+npm start               # starts on port 3000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Then open `http://localhost:3000`, click **Research** in the sidebar, enter a topic, and click **Research**.
 
-### Advanced Configuration
+## Tech Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- React 19
+- Axios (API calls)
+- CSS variables for dark/light theme support
+- No external UI libraries — custom components
